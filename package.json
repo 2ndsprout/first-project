@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "css-loader": "^7.1.2",
+    "daisyui": "^4.11.1",
     "file-loader": "^6.2.0",
     "style-loader": "^4.0.0",
     "tailwindcss": "^3.4.3",
@@ -10,7 +11,6 @@
   "dependencies": {
     "@toast-ui/editor": "^3.2.2",
     "@toast-ui/editor-plugin-code-syntax-highlight": "^3.1.0",
-    "daisyui": "^4.11.1",
     "tui-editor": "^1.4.10"
   },
   "name": "first-project",
