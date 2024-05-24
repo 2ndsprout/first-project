@@ -15,7 +15,7 @@
   },
   "name": "first-project",
   "version": "1.0.0",
-  "main": "tailwind.config.js",
+  "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "bundle": "webpack --watch --mode=development",
