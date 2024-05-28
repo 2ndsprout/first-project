@@ -1,5 +1,6 @@
-package com.example.demo_project.member;
+package com.example.demo_project.diary.category;
 
+import com.example.demo_project.diary.member.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,20 +14,18 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Member {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String username;
+    private String name;
 
-    private String password;
-
-    private String nickname;
-
-    private String email;
+    private String content;
 
     private LocalDateTime createDate;
+
+    @ManyToOne
+    private Member member;
 }

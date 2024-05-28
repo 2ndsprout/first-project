@@ -1,4 +1,4 @@
-package com.example.demo_project.member;
+package com.example.demo_project.diary.member;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

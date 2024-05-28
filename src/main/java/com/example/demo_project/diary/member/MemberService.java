@@ -1,10 +1,12 @@
-package com.example.demo_project.member;
+package com.example.demo_project.diary.member;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,5 +24,13 @@ public class MemberService {
         member.setCreateDate(LocalDateTime.now());
 
         return this.memberRepository.save(member);
+    }
+
+    public Member getMember (String username) {
+        Optional<Member> _member = this.memberRepository.findByUsername(username);
+        if (_member.isEmpty()) {
+            throw new UsernameNotFoundException("User Not Found");
+        }
+        return _member.get();
     }
 }

@@ -28,6 +28,9 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .defaultSuccessUrl("/")
                 )
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                )
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/login")

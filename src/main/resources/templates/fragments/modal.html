@@ -1,0 +1,14 @@
+<dialog th:fragment="addModal" id="addModal" class="modal">
+    <div class="modal-box">
+        <form th:action="@{|/category/create|}" class="flex flex-col justify-center" method="post">
+            <input type="text" name="name" class="input input-outline">
+            <input type="text" name="content" class="input input-outline">
+            <input type="submit" value="add category" class="btn btn-success">
+        </form>
+        <div class="modal-action">
+            <form method="dialog">
+                <button class="btn">Close</button>
+            </form>
+        </div>
+    </div>
+</dialog>
