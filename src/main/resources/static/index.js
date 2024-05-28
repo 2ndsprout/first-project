@@ -14,9 +14,9 @@ const Prism = require('prismjs');
 
 const editor = new Editor({
   el: document.querySelector('#editor'),
-  height: 'auto',
-  width: 'auto',
-  initialEditType: 'markdown',
+  height: '700px',
+  width: '700px',
+  initialEditType: 'wysiwyg',
   previewStyle: 'vertical',
   theme: 'dark',
   plugins: [codeSyntax, codeSyntaxHighlight]

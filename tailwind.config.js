@@ -1,14 +1,45 @@
 module.exports = {
-  content: [
-    './src/main/resources/**/*.{html,js}', // 프로젝트에 맞게 경로를 수정하세요.
-  ],
+  content: ["./src/**/*.{html,css,js}"],
   theme: {
     extend: {},
   },
-  plugins: [
-    require('daisyui'),
-  ],
+  plugins: [require('daisyui'),],
+
   daisyui: {
-    themes: ["light", "dark", "cupcake"], // 원하는 테마를 추가하세요.
-  },
+     themes: [
+           "light",
+           "dark",
+           "cupcake",
+           "bumblebee",
+           "emerald",
+           "corporate",
+           "synthwave",
+           "retro",
+           "cyberpunk",
+           "valentine",
+           "halloween",
+           "garden",
+           "forest",
+           "aqua",
+           "lofi",
+           "pastel",
+           "fantasy",
+           "wireframe",
+           "black",
+           "luxury",
+           "dracula",
+           "cmyk",
+           "autumn",
+           "business",
+           "acid",
+           "lemonade",
+           "night",
+           "coffee",
+           "winter",
+           "dim",
+           "nord",
+           "sunset",
+         ], // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
+     themeRoot: ":root", // The element that receives theme color CSS variables
+    },
 }
