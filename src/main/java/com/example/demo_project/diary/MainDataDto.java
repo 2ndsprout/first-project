@@ -15,4 +15,5 @@ import java.util.List;
 public class MainDataDto {
 
     private List<Category> categoryList;
+
 }
