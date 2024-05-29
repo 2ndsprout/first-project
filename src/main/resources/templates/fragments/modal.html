@@ -3,11 +3,15 @@
         <form th:action="@{|/category/create|}" class="h-[85%]" method="post">
             <input type="text" name="name" class="input input-bordered input-primary w-[100%]" placeholder="What's the Title">
             <input type="text" name="imgUrl" class="input input-bordered input-primary w-[100%]" placeholder="Image Url">
-            <input type="submit" value="add category" class="btn btn-success w-[100%]">
+            <button type="submit" class="btn btn-success w-[100%]">
+                <i class="fa-solid fa-plus"></i>add category
+            </button>
         </form>
         <div class="modal-action">
             <form method="dialog">
-                <button class="btn">Close</button>
+                <button class="btn">
+                    <i class="fa-solid fa-xmark"></i>Close
+                </button>
             </form>
         </div>
     </div>
@@ -25,7 +29,9 @@
         </form>
         <div class="modal-action">
             <form method="dialog">
-                <button class="btn">Close</button>
+                <button class="btn">
+                    <i class="fa-solid fa-xmark"></i>Close
+                </button>
             </form>
         </div>
     </div>
