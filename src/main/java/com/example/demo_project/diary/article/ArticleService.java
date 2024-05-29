@@ -27,4 +27,17 @@ public class ArticleService {
     public Article getArticle (Long id) {
         return this.articleRepository.findById(id).orElseThrow();
     }
+
+    public Article update (Long id, String title, String content) {
+        Article article = this.getArticle(id);
+        if (title.trim().isEmpty()) {
+            title = "new title";
+        }
+        if (content.trim().isEmpty()) {
+            content = "empty";
+        }
+        article.setTitle(title);
+        article.setContent(content);
+        return this.articleRepository.save(article);
+    }
 }

@@ -4,6 +4,7 @@
      targetCategory=${listDataDto.targetCategory},
      articleList=${listDataDto.articleList},
      targetArticle=${listDataDto.targetArticle}">
+
     <div class="flex h-screen">
         <div class="card bg-base-100 shadow-xl h-full w-[20%] flex flex-col gap-3">
             <h2 class="card-title p-10px justify-center" th:text="${targetCategory.name}"></h2>
@@ -27,12 +28,16 @@
             </div>
         </div>
         <div class="card bg-transparent shadow-xl w-[80%] h-full">
-            <form th:action="@{|/category/${targetCategory.id}/articles/${targetArticle.id}/update|}" class="card-body">
-                <input type="text" name="title" class="w-full input input-bordered text-center" th:value="${targetArticle.title}">
-                <input type="hidden" name="content" th:value="${targetArticle.content}" id="editor-body">
-                <div id="editor" class="w-[50%]"></div>
-                <div id="viewer" class="w-[50%]"></div>
-            </form>
+            <div class="card-body">
+                <form th:action="@{|/category/${targetCategory.id}/articles/${targetArticle.id}/update|}" id="updateForm" method="post">
+                    <input type="text" name="title" class="w-full input input-bordered text-center gap-3" th:value="${targetArticle.title}">
+                    <input type="hidden" name="content" th:value="${targetArticle.content}" id="editor-body">
+                    <div id="editor" class="w-full"></div>
+                </form>
+                <button class="btn btn-info w-[45%] mt-[55px] postActionBtn" type="button" value="수정" onclick="updateForm()">
+                    <i class="fa-solid fa-pen-to-square"></i>edit
+                </button>
+            </div>
         </div>
     </div>
     <script src="/dist/bundle.js"></script>

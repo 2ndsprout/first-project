@@ -52,4 +52,12 @@ public class ArticleController {
 
         return "redirect:/category/%d/articles/%d".formatted(categoryId, article.getId());
     }
+
+    @PostMapping("/{articleId}/update")
+    public String update(@PathVariable("categoryId")Long categoryId,
+                         @PathVariable("articleId") Long articleId, String title, String content) {
+        Article article = this.articleService.update(articleId, title, content);
+
+        return "redirect:/category/%d/articles/%d".formatted(categoryId, article.getId());
+    }
 }
