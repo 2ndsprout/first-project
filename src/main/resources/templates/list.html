@@ -1,30 +1,36 @@
 <html layout:decorate="~{layout}">
-<div layout:fragment="content">
-    <div class="flex flex-col">
-        <div class="flex gap-10">
-            <div class="card w-[20%] h-[100%] bg-base-100 shadow-xl">
-                <div class="card-body h-[85%]">
-                    <ul class="menu overflow-auto" th:each="article : ${articleList}">
-                        <li>
-                            <a href="#" class="text-lg">
-                                <i class="fa-regular fa-note-sticky"></i>
-                                <span th:text="${article.title}"></span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+<div layout:fragment="content"
+     th:with="categoryList=${listDataDto.categoryList},
+     targetCategory=${listDataDto.targetCategory},
+     articleList=${listDataDto.articleList},
+     targetArticle=${listDataDto.targetArticle}">
+    <div class="flex h-screen">
+        <div class="card bg-base-100 shadow-xl h-full w-[20%] flex flex-col gap-3">
+            <h2 class="card-title p-10px justify-center" th:text="${targetCategory.name}"></h2>
+            <div class="card-body overflow-auto flex-grow">
+                <ul class="menu">
+                    <li class="text-lg" th:each="article : ${articleList}">
+                        <a th:href="@{|/category/${targetCategory.id}/articles/${article.id}|}"
+                           th:classappend="${article.id == targetArticle.id} ? 'bg-gray-600' : '' ">
+                            <i class="fa-regular fa-note-sticky"></i>
+                            <span th:text="${article.title}"></span>
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <div class="card w-[80%] h-[100%] bg-indigo-600 shadow-xl">
-                <div class="card-body h-[85%] w-[100%]" >
-                    <div id="editor" style="width: 1500px"></div>
-                </div>
+            <div class="card-actions justify-center items-center">
+                <form th:action="@{|/category/${targetCategory.id}/articles/create|}" method="post">
+                    <button type="submit" class="btn btn-success w-full mb-[60px]">
+                        <i class="fa-solid fa-plus"></i>add
+                    </button>
+                </form>
             </div>
         </div>
-        <div class="w-[20%]">
-            <form th:action="@{|/category/${category.id}/articles/create|}" method="post">
-                <button type="submit" class="btn btn-success w-full">
-                    <i class="fa-solid fa-plus"></i>add
-                </button>
+        <div class="card bg-transparent shadow-xl w-[80%] h-full">
+            <form th:action="@{|/category/${targetCategory.id}/articles/${targetArticle.id}/update|}" class="card-body">
+                <input type="text" name="title" class="w-full input input-bordered text-center" th:value="${targetArticle.title}">
+                <input type="hidden" name="content" th:value="${targetArticle.content}" id="editor-body">
+                <div id="editor" class="w-full"></div>
             </form>
         </div>
     </div>

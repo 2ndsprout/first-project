@@ -29,7 +29,19 @@ public class MainService {
         return this.categoryService.getCategoryListByMember(member);
     }
 
-    public MainDataDto getMainDataDefault(Principal principal) {
+    public ListDataDto getListData(Long categoryId, Long articleId, Principal principal) {
+        ListDataDto listDataDto = this.getDefaultListData(principal);
+        Category targetCategory = this.getCategory(categoryId);
+        Article targetArticle = this.articleService.getArticle(articleId);
+
+        listDataDto.setTargetCategory(targetCategory);
+        listDataDto.setArticleList(targetCategory.getArticleList());
+        listDataDto.setTargetArticle(targetArticle);
+
+        return listDataDto;
+    }
+
+    public ListDataDto getDefaultListData(Principal principal) {
 
         Member member = this.getMember(principal.getName());
         List<Category> categoryList = this.getCategoryListByMember(member);
@@ -44,9 +56,12 @@ public class MainService {
             category.addToArticle(article);
             this.categoryService.save(category);
         }
+        Category targetCategory = categoryList.getLast();
+        List<Article> articleList = targetCategory.getArticleList();
+        Article targetArticle = articleList.getLast();
 
-        MainDataDto mainDataDto = new MainDataDto(categoryList);
-        return mainDataDto;
+        ListDataDto listDataDto = new ListDataDto(categoryList, targetCategory, articleList, targetArticle);
+        return listDataDto;
     }
 
     public Category getCategory (Long categoryId) {
@@ -72,5 +87,8 @@ public class MainService {
         Article article = this.articleService.saveDefault();
         category.addToArticle(article);
         return this.categoryService.save(category);
+    }
+    public void save (Category category) {
+        this.categoryService.save(category);
     }
 }

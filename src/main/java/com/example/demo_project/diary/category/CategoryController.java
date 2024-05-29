@@ -27,6 +27,14 @@ public class CategoryController {
 
     }
 
+    @PostMapping("/{categoryId}/update")
+    public String update (@PathVariable("categoryId")Long categoryId,
+                          String name, String content, String imgUrl) {
+        this.categoryService.update(categoryId, name, content, imgUrl);
+
+        return "redirect:/";
+    }
+
     @PostMapping("/{categoryId}/delete")
     public String delete (@PathVariable("categoryId")Long categoryId) {
         this.categoryService.delete(categoryId);

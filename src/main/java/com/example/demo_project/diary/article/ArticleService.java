@@ -24,4 +24,7 @@ public class ArticleService {
         article.setCreateDate(LocalDateTime.now());
         return this.articleRepository.save(article);
     }
+    public Article getArticle (Long id) {
+        return this.articleRepository.findById(id).orElseThrow();
+    }
 }

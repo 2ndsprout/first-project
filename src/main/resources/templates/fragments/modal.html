@@ -3,8 +3,27 @@
         <form th:action="@{|/category/create|}" class="flex flex-col justify-center w-[85%] h-[85%] gap-3" method="post">
             <input type="text" name="name" class="input input-bordered input-primary w-full max-w-xs" placeholder="What's the Title">
             <input type="text" name="content" class="input input-bordered input-primary w-full max-w-xs" placeholder="What's the Content">
-            <input type="text" name="imgUrl" class="input input-bordered input-primary w-full max-w-xs" placeholder="Img Url">
+            <input type="text" name="imgUrl" class="input input-bordered input-primary w-full max-w-xs" placeholder="Image Url">
             <input type="submit" value="add category" class="btn btn-success">
+        </form>
+        <div class="modal-action">
+            <form method="dialog">
+                <button class="btn">Close</button>
+            </form>
+        </div>
+    </div>
+</dialog>
+
+<dialog th:fragment="updateModal" th:attr="id=${'updateModal' + category.id}" class="modal">
+    <div class="modal-box w-[700px]">
+        <form th:action="@{|/category/${category.id}/update|}" class="flex flex-col justify-center w-[85%] h-[85%] gap-3" method="post">
+            <input type="text" name="name" class="input input-bordered input-primary w-full max-w-xs" th:value="${category.name}">
+            <input type="text" name="content" class="input input-bordered input-primary w-full max-w-xs" th:value="${category.content}">
+            <input type="text" name="imgUrl" class="input input-bordered input-primary w-full max-w-xs" th:value="${category.imgUrl}">
+            <button type="submit" class="btn btn-success">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <span>edit & sumbit</span>
+            </button>
         </form>
         <div class="modal-action">
             <form method="dialog">

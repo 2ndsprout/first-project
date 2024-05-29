@@ -12,11 +12,12 @@ const codeSyntaxHighlight = require('@toast-ui/editor-plugin-code-syntax-highlig
 const codeSyntax = require('@toast-ui/editor-plugin-color-syntax');
 const Prism = require('prismjs');
 
-const editor = new Editor({
-  el: document.querySelector('#editor'),
-  height: 'auto',
-  initialEditType: 'wysiwyg',
-  previewStyle: 'vertical',
-  theme: 'dark',
-  plugins: [codeSyntax, codeSyntaxHighlight]
-});
+  const editor = new Editor({
+    el: document.querySelector('#editor'),
+    height: '850px',
+    initialEditType: 'wysiwyg',
+    previewStyle: 'vertical',
+    theme: 'dark',
+    initialValue: document.getElementById("editor-body").value,
+  });
+editor.getMarkdown();
