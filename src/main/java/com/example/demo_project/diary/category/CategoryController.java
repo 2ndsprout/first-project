@@ -19,9 +19,9 @@ public class CategoryController {
     private final MainService mainService;
 
     @PostMapping("/create")
-    public String create (String name, String content, String imgUrl, Principal principal ) {
+    public String create (String name, String imgUrl, Principal principal ) {
         Member member = this.mainService.getMember(principal.getName());
-        Category category = this.mainService.create(name, content, imgUrl, member);
+        Category category = this.mainService.create(name, imgUrl, member);
 
         return "redirect:/";
 
@@ -29,10 +29,9 @@ public class CategoryController {
 
     @PostMapping("/{categoryId}/update")
     public String update (@PathVariable("categoryId")Long categoryId,
-                          String name, String content, String imgUrl) {
-        this.categoryService.update(categoryId, name, content, imgUrl);
-
-        return "redirect:/";
+                          String name, String imgUrl) {
+            this.categoryService.update(categoryId, name, imgUrl);
+            return "redirect:/";
     }
 
     @PostMapping("/{categoryId}/delete")

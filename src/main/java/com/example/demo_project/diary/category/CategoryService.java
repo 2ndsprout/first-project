@@ -22,7 +22,7 @@ public class CategoryService {
         return this.categoryRepository.findByMember(member);
     }
 
-    public void update (Long id, String name, String content, String imgUrl) {
+    public void update (Long id, String name, String imgUrl) {
         Optional<Category> _category = this.categoryRepository.findById(id);
         if (_category.isEmpty()) {
             throw new RuntimeException("Category Not Found");
@@ -31,15 +31,11 @@ public class CategoryService {
             if (name.trim().isEmpty()) {
                 name = "new Category";
             }
-            if (content.trim().isEmpty()) {
-                content = "";
-            }
             if (imgUrl.trim().isEmpty()) {
                 imgUrl = "https://img.freepik.com/free-vector/note-paper-background-with-hole-punches_78370-2344.jpg?t=st=1716899988~exp=1716903588~hmac=fc80740f553db0d52574670556a5ceec88475e883dee92b9a6da818583435ba6&w=1380";
             }
             Category category = _category.get();
             category.setName(name);
-            category.setContent(content);
             category.setImgUrl(imgUrl);
             this.save(category);
         }

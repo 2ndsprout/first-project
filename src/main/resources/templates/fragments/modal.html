@@ -1,10 +1,9 @@
 <dialog th:fragment="addModal" id="addModal" class="modal">
-    <div class="modal-box w-[700px]">
-        <form th:action="@{|/category/create|}" class="flex flex-col justify-center w-[85%] h-[85%] gap-3" method="post">
-            <input type="text" name="name" class="input input-bordered input-primary w-full max-w-xs" placeholder="What's the Title">
-            <input type="text" name="content" class="input input-bordered input-primary w-full max-w-xs" placeholder="What's the Content">
-            <input type="text" name="imgUrl" class="input input-bordered input-primary w-full max-w-xs" placeholder="Image Url">
-            <input type="submit" value="add category" class="btn btn-success">
+    <div class="modal-box w-[700px] items-center flex flex-col">
+        <form th:action="@{|/category/create|}" class="h-[85%]" method="post">
+            <input type="text" name="name" class="input input-bordered input-primary w-[100%]" placeholder="What's the Title">
+            <input type="text" name="imgUrl" class="input input-bordered input-primary w-[100%]" placeholder="Image Url">
+            <input type="submit" value="add category" class="btn btn-success w-[100%]">
         </form>
         <div class="modal-action">
             <form method="dialog">
@@ -15,12 +14,11 @@
 </dialog>
 
 <dialog th:fragment="updateModal" th:attr="id=${'updateModal' + category.id}" class="modal">
-    <div class="modal-box w-[700px]">
-        <form th:action="@{|/category/${category.id}/update|}" class="flex flex-col justify-center w-[85%] h-[85%] gap-3" method="post">
-            <input type="text" name="name" class="input input-bordered input-primary w-full max-w-xs" th:value="${category.name}">
-            <input type="text" name="content" class="input input-bordered input-primary w-full max-w-xs" th:value="${category.content}">
-            <input type="text" name="imgUrl" class="input input-bordered input-primary w-full max-w-xs" th:value="${category.imgUrl}">
-            <button type="submit" class="btn btn-success">
+    <div class="modal-box w-[700px] items-center flex flex-col">
+        <form th:action="@{|/category/${category.id}/update|}" class="h-[85%]" method="post">
+            <input type="text" name="name" class="input input-bordered input-primary w-[100%]" th:value="${category.name}">
+            <input type="text" name="imgUrl" class="input input-bordered input-primary w-[100%]" th:value="${category.imgUrl}">
+            <button type="submit" class="btn btn-info w-[100%]">
                 <i class="fa-solid fa-pen-to-square"></i>
                 <span>edit & sumbit</span>
             </button>

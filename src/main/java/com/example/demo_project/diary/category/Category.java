@@ -28,8 +28,6 @@ public class Category {
 
     private String name;
 
-    private String content;
-
     private LocalDateTime createDate;
 
     @ManyToOne

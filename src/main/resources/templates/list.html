@@ -30,7 +30,8 @@
             <form th:action="@{|/category/${targetCategory.id}/articles/${targetArticle.id}/update|}" class="card-body">
                 <input type="text" name="title" class="w-full input input-bordered text-center" th:value="${targetArticle.title}">
                 <input type="hidden" name="content" th:value="${targetArticle.content}" id="editor-body">
-                <div id="editor" class="w-full"></div>
+                <div id="editor" class="w-[50%]"></div>
+                <div id="viewer" class="w-[50%]"></div>
             </form>
         </div>
     </div>
