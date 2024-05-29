@@ -37,4 +37,9 @@ public class Category {
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
     private List<Article> articleList = new ArrayList<>();
+
+    public void addToArticle (Article article) {
+        this.articleList.add(article);
+        article.setCategory(this);
+    }
 }

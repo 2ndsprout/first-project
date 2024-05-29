@@ -1,0 +1,33 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content">
+    <div class="flex flex-col">
+        <div class="flex gap-10">
+            <div class="card w-[20%] h-[100%] bg-base-100 shadow-xl">
+                <div class="card-body h-[85%]">
+                    <ul class="menu overflow-auto" th:each="article : ${articleList}">
+                        <li>
+                            <a href="#" class="text-lg">
+                                <i class="fa-regular fa-note-sticky"></i>
+                                <span th:text="${article.title}"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card w-[80%] h-[100%] bg-indigo-600 shadow-xl">
+                <div class="card-body h-[85%] w-[100%]" >
+                    <div id="editor" style="width: 1500px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="w-[20%]">
+            <form th:action="@{|/category/${category.id}/articles/create|}" method="post">
+                <button type="submit" class="btn btn-success w-full">
+                    <i class="fa-solid fa-plus"></i>add
+                </button>
+            </form>
+        </div>
+    </div>
+    <script src="/dist/bundle.js"></script>
+</div>
+</html>

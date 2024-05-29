@@ -21,7 +21,7 @@ public class CategoryController {
     @PostMapping("/create")
     public String create (String name, String content, String imgUrl, Principal principal ) {
         Member member = this.mainService.getMember(principal.getName());
-        Category category = this.categoryService.create(name, content, imgUrl, member);
+        Category category = this.mainService.create(name, content, imgUrl, member);
 
         return "redirect:/";
 

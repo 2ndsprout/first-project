@@ -22,6 +22,7 @@ public class Article {
 
     private String title;
 
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     private LocalDateTime createDate;
