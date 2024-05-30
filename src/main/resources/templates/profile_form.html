@@ -9,10 +9,26 @@
          isSearchModal=${paramHandler.isSearchModal},
          type=${paramHandler.type}">
 <div layout:fragment="content">
-
-    <div th:text="${member.nickname}"></div>
-    <div th:text="${member.password}"></div>
-
+    <dialog th:replace="~{fragments/modal::renameModal}"></dialog>
+    <div class="flex h-screen">
+        <div class="stats m-5 bg-gray-400 h-[30%] w-[30%] text-primary-content">
+            <div class="stat">
+                <div class="stat-title text-black">Your Nickname</div>
+                <div class="stat-value" th:text="${member.nickname}"></div>
+                <div class="stat-actions">
+                    <button class="btn btn-sm btn-success" th:text="'Registration Date: ' + ${#temporals.format(member.createDate, 'yyyy-MM-dd')}"></button>
+                </div>
+            </div>
+            <div class="stat">
+                <div class="stat-title text-black">The number of Articles</div>
+                <div class="stat-value" th:text="${#lists.size(member.articleList)}"></div>
+                <div class="stat-actions">
+                    <button class="btn btn-sm" onclick="addModal.renameModal()">Nickname Change</button>
+                    <button class="btn btn-sm">Go to Recent posts</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="params">
         <input type="hidden" name="keyword" th:value="${keyword}">
         <input type="hidden" name="type" th:value="${type}">
