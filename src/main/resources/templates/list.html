@@ -19,7 +19,8 @@
             <div class="card-body overflow-auto flex-grow">
                 <ul class="menu">
                     <li class="text-lg" th:each="article : ${articleList}">
-                        <a th:href="@{|/category/${targetCategory.id}/articles/${article.id}|}"
+                        <a class="getActionBtn"
+                           th:data-url="@{|/category/${targetCategory.id}/articles/${article.id}|}"
                            th:classappend="${article.id == targetArticle.id} ? 'bg-gray-600' : '' ">
                             <i class="fa-regular fa-note-sticky"></i>
                             <span th:text="${article.title}"></span>
@@ -29,7 +30,7 @@
             </div>
             <div class="card-actions justify-center items-center">
                 <form th:action="@{|/category/${targetCategory.id}/articles/create|}" method="post">
-                    <button type="submit" class="btn btn-success w-full mb-[60px]">
+                    <button type="submit" class="btn btn-success w-full mb-[60px] postActionBtn">
                         <i class="fa-solid fa-plus"></i>add
                     </button>
                 </form>
@@ -43,11 +44,11 @@
                     <div id="editor" class="w-full"></div>
                 </form>
                 <div class="flex w-full mx-auto justify-center gap-5">
-                    <button class="btn btn-info w-[300px]" type="button" onclick="updateForm()">
+                    <button class="btn btn-info w-[300px] postActionBtn" type="button" onclick="updateForm()">
                         <i class="fa-solid fa-pen-to-square"></i>edit
                     </button>
                     <form th:action="@{|/category/${targetCategory.id}/articles/${targetArticle.id}/delete|}" method="post" id="deleteFrom">
-                        <button class="btn btn-error w-[300px]" type="button" onclick="deleteForm()">
+                        <button class="btn btn-error w-[300px] postActionBtn" type="button" onclick="deleteForm()">
                             <i class="fa-solid fa-trash"></i>delete
                         </button>
                     </form>
@@ -55,16 +56,15 @@
             </div>
         </div>
     </div>
+    <div id="params">
+        <input type="hidden" name="keyword" th:value="${keyword}">
+        <input type="hidden" name="type" th:value="${type}">
+    </div>
+    <div>
+        <input type="hidden" id="isSearchModal" name="isSearchModal" th:value="${isSearchModal}">
+    </div>
     <script src="/dist/bundle.js"></script>
     <script>
-        window.onload = () => {
-
-            const isSearchModal = document.querySelector("#isSearchModal").value;
-            if (JSON.parse(isSearchModal)) {
-                searchModal.showModal();
-            }
-        }
-
         function deleteForm() {
             const form = document.getElementById("deleteFrom");
             if(confirm("삭제하시겠습니까?")){
@@ -73,5 +73,6 @@
         }
     </script>
     <script th:replace="~{fragments/modal::searchModalJS}"></script>
+    <script src="/main.js"></script>
 </div>
 </html>

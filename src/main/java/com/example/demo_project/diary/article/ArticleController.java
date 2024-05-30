@@ -32,7 +32,7 @@ public class ArticleController {
             Article article = this.articleService.saveDefault(member);
             category.addToArticle(article);
             this.mainService.save(category);
-            return "redirect:/category/%d/articles/list".formatted(categoryId);
+            return paramHandler.getRedirectUrl("/category/%d/articles/list".formatted(categoryId));
         }
         Long articleId = category.getArticleList().getFirst().getId();
         ListDataDto listDataDto = this.mainService.getListData(categoryId, articleId, principal, paramHandler.getKeyword(), paramHandler.getType());
@@ -53,29 +53,29 @@ public class ArticleController {
     }
 
     @PostMapping("/create")
-    public String create (@PathVariable("categoryId")Long categoryId) {
+    public String create (@PathVariable("categoryId")Long categoryId, ParamHandler paramHandler) {
         Category category = this.mainService.getCategory(categoryId);
         Member member = category.getMember();
         Article article = this.articleService.saveDefault(member);
         category.addToArticle(article);
         this.mainService.save(category);
 
-        return "redirect:/category/%d/articles/%d".formatted(categoryId, article.getId());
+        return paramHandler.getRedirectUrl("/category/%d/articles/%d".formatted(categoryId, article.getId()));
     }
 
     @PostMapping("/{articleId}/update")
     public String update(@PathVariable("categoryId")Long categoryId,
-                         @PathVariable("articleId") Long articleId, String title, String content) {
+                         @PathVariable("articleId") Long articleId, String title, String content, ParamHandler paramHandler) {
         Article article = this.articleService.update(articleId, title, content);
 
-        return "redirect:/category/%d/articles/%d".formatted(categoryId, article.getId());
+        return paramHandler.getRedirectUrl("/category/%d/articles/%d".formatted(categoryId, article.getId()));
     }
 
     @PostMapping("/{articleId}/delete")
     public String delete(@PathVariable("categoryId")Long categoryId,
-                         @PathVariable("articleId") Long articleId) {
+                         @PathVariable("articleId") Long articleId, ParamHandler paramHandler) {
         this.articleService.delete(articleId);
 
-        return "redirect:/category/%d/articles/list".formatted(categoryId);
+        return paramHandler.getRedirectUrl("/category/%d/articles/list".formatted(categoryId));
     }
 }

@@ -9,8 +9,6 @@
                isSearchModal=${paramHandler.isSearchModal},
                type=${paramHandler.type}">
 
-    <input type="hidden" name="isSearchModal" id="isSearchModal" th:value="${isSearchModal}">
-
     <div class="flex flex-col gap-3">
 
         <dialog th:replace="~{fragments/modal::addModal}"></dialog>
@@ -25,7 +23,8 @@
                     <h2 class="card-title" th:text="${category.name}"></h2>
                     <span th:text="${#temporals.format(category.createDate, 'yyyy-MM-dd HH:mm')}"></span>
                     <div class="card-actions justify-center">
-                        <a th:href="@{|/category/${category.id}/articles/list|}" class="btn btn-primary w-full">
+                        <a th:data-url="@{|/category/${category.id}/articles/list|}"
+                           class="btn btn-primary w-full getActionBtn">
                             <i class="fa-solid fa-list-ul"></i>list
                             <div class="badge badge-secondary" th:text="${#lists.size(category.articleList)}"></div>
                         </a>
@@ -38,7 +37,7 @@
                             </button>
                         </div>
                         <form th:action="@{|/category/${category.id}/delete|}" method="post">
-                            <button type="submit" class="btn btn-xs btn-error">
+                            <button type="submit" class="btn btn-xs btn-error postActionBtn">
                                 <i class="fa-solid fa-trash"></i>delete
                             </button>
                         </form>
@@ -55,16 +54,15 @@
             </div>
         </div>
     </div>
+    <div id="params">
+        <input type="hidden" name="keyword" th:value="${keyword}">
+        <input type="hidden" name="type" th:value="${type}">
+    </div>
+    <div>
+        <input type="hidden" id="isSearchModal" name="isSearchModal" th:value="${isSearchModal}">
+    </div>
 
-    <script>
-        window.onload = () => {
-
-            const isSearchModal = document.querySelector("#isSearchModal").value;
-            if (JSON.parse(isSearchModal)) {
-                searchModal.showModal();
-            }
-        }
-    </script>
+    <script src="/main.js"></script>
     <script th:replace="~{fragments/modal::searchModalJS}"></script>
 </div>
 </html>

@@ -3,7 +3,7 @@
         <form th:action="@{|/category/create|}" class="h-[85%]" method="post">
             <input type="text" name="name" class="input input-bordered input-primary w-[100%]" placeholder="What's the Title">
             <input type="text" name="imgUrl" class="input input-bordered input-primary w-[100%]" placeholder="Image Url">
-            <button type="submit" class="btn btn-success w-[100%]">
+            <button type="submit" class="btn btn-success w-[100%] postActionBtn">
                 <i class="fa-solid fa-plus"></i>add category
             </button>
         </form>
@@ -22,7 +22,7 @@
         <form th:action="@{|/category/${category.id}/update|}" class="h-[85%]" method="post">
             <input type="text" name="name" class="input input-bordered input-primary w-[100%]" th:value="${category.name}">
             <input type="text" name="imgUrl" class="input input-bordered input-primary w-[100%]" th:value="${category.imgUrl}">
-            <button type="submit" class="btn btn-info w-[100%]">
+            <button type="submit" class="btn btn-info w-[100%] postActionBtn">
                 <i class="fa-solid fa-pen-to-square"></i>
                 <span>edit & sumbit</span>
             </button>
@@ -47,9 +47,9 @@
                     <option id="contentOption" value="content">Content Search</option>
                 </select>
                 <input type="hidden" name="isSearchModal" value="true">
-                <input type="text" name="keyword" class="input input-bordered" placeholder="Search...">
+                <input type="text" name="keyword" th:value="${keyword}" class="input input-bordered" placeholder="Search...">
                 <input type="hidden" name="type" id="searchTypeHidden">
-                <button type="submit" class="btn">
+                <button type="submit" class="btn searchBtn">
                     <i class="fa-solid fa-magnifying-glass"></i> Search
                 </button>
             </form>
@@ -58,8 +58,8 @@
             th:with="itemsHover='hover:bg-gray-600 hover:cursor-pointer p-[10px] flex flex-col', itemAnchor='inline-block w-[100%] getActionBtn'">
             <li th:each="article : ${searchedArticleList}" th:class="${itemsHover}">
                 <div class="flex items-center">
-                    <i class="fa-solid fa-book p-[10px]"></i>
-                    <a th:href="@{|/category/${article.category.id}/articles/${article.id}|}"
+                    <i class="fa-regular fa-note-sticky"></i>
+                    <a th:data-url="@{|/category/${article.category.id}/articles/${article.id}|}"
                        th:text="${article.title}"
                        th:class="${itemAnchor}"></a>
                 </div>
@@ -76,6 +76,15 @@
     </div>
 </dialog>
 <script th:fragment="searchModalJS">
+
+    document.querySelector(".searchBtn").addEventListener("click", (e) => {
+
+        postAction(e.target, (params) => {
+            const keyword = document.querySelector(".search-input").value;
+            params.isSearchModal = true;
+            params.keyword = keyword;
+        });
+    });
 
     function updateSearchType() {
         const titleOption = document.getElementById('titleOption');

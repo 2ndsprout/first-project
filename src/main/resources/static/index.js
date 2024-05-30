@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById("updateForm");
     const editorBody = document.getElementById("editor-body");
     editorBody.value = editor.getMarkdown();
-    if (confirm("수정하시겠습니까?")) {
+    if (confirm("Would you like it to be modified?")) {
       form.submit();
     }
   };

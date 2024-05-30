@@ -26,7 +26,7 @@ public class MainController {
             return "main";
         }catch (NoSuchElementException e) {
             e.printStackTrace();
-            return "redirect:/";
+            return paramHandler.getRedirectUrl("/");
         }
 
     }
