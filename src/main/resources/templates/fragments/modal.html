@@ -17,6 +17,25 @@
     </div>
 </dialog>
 
+<dialog th:fragment="renameModal" id="renameModal" class="modal">
+    <div class="modal-box w-[700px] items-center flex flex-col">
+        <form th:action="@{|/member/${member.username}/update|}" class="h-[85%]" method="post">
+            <input type="text" name="nickname" class="input input-bordered input-primary w-[100%]" th:value="${member.nickname}" placeholder="What's your Nickname ?">
+            <button type="submit" class="btn btn-info w-[100%] postActionBtn">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <span>change</span>
+            </button>
+        </form>
+        <div class="modal-action">
+            <form method="dialog">
+                <button class="btn">
+                    <i class="fa-solid fa-xmark"></i>Close
+                </button>
+            </form>
+        </div>
+    </div>
+</dialog>
+
 <dialog th:fragment="updateModal" th:attr="id=${'updateModal' + category.id}" class="modal">
     <div class="modal-box w-[700px] items-center flex flex-col">
         <form th:action="@{|/category/${category.id}/update|}" class="h-[85%]" method="post">

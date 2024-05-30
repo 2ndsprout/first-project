@@ -9,22 +9,25 @@
          isSearchModal=${paramHandler.isSearchModal},
          type=${paramHandler.type}">
 <div layout:fragment="content">
+
     <dialog th:replace="~{fragments/modal::renameModal}"></dialog>
+    <dialog th:replace="~{fragments/modal::searchModal}"></dialog>
+
     <div class="flex h-screen">
-        <div class="stats m-5 bg-gray-400 h-[30%] w-[30%] text-primary-content">
+        <div class="stats m-5 bg-gray-400 h-[30%] w-[35%] text-primary-content">
             <div class="stat">
                 <div class="stat-title text-black">Your Nickname</div>
                 <div class="stat-value" th:text="${member.nickname}"></div>
                 <div class="stat-actions">
-                    <button class="btn btn-sm btn-success" th:text="'Registration Date: ' + ${#temporals.format(member.createDate, 'yyyy-MM-dd')}"></button>
+                    <button class="btn btn-sm btn-success" th:text="'Registration Date : ' + ${#temporals.format(member.createDate, 'yyyy-MM-dd')}"></button>
                 </div>
             </div>
             <div class="stat">
-                <div class="stat-title text-black">The number of Articles</div>
+                <div class="stat-title text-black">The number of Posts</div>
                 <div class="stat-value" th:text="${#lists.size(member.articleList)}"></div>
                 <div class="stat-actions">
-                    <button class="btn btn-sm" onclick="addModal.renameModal()">Nickname Change</button>
-                    <button class="btn btn-sm">Go to Recent posts</button>
+                    <button class="btn btn-sm" onclick="renameModal.showModal()">Nickname Change</button>
+                    <a th:href="@{|/category/${member.articleList[member.articleList.size() - 1].category.id}/articles/${member.articleList[member.articleList.size() - 1].id}|}" class="btn btn-sm">Go to Recent post</a>
                 </div>
             </div>
         </div>
@@ -37,5 +40,6 @@
         <input type="hidden" id="isSearchModal" name="isSearchModal" th:value="${isSearchModal}">
     </div>
     <script src="/main.js"></script>
+    <script th:replace="~{fragments/modal::searchModalJS}"></script>
 </div>
 </html>

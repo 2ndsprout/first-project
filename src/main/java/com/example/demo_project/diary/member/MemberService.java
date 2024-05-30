@@ -33,4 +33,9 @@ public class MemberService {
         }
         return _member.get();
     }
+    public void changeNickname (String username, String nickname) {
+        Member member = this.getMember(username);
+        member.setNickname(nickname);
+        this.memberRepository.save(member);
+    }
 }

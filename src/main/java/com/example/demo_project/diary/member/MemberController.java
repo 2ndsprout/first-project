@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 
 @Controller
@@ -71,5 +73,12 @@ public class MemberController {
         model.addAttribute("listDataDto", listDataDto);
         model.addAttribute("paramHandler", paramHandler);
         return "profile_form";
+    }
+    @PostMapping("/member/{username}/update")
+    public String update (@PathVariable("username") String username,
+                          String nickname, ParamHandler paramHandler) {
+
+        this.memberService.changeNickname(username, nickname);
+        return paramHandler.getRedirectUrl("/member/%s/profile".formatted(URLEncoder.encode(username, StandardCharsets.UTF_8)));
     }
 }
