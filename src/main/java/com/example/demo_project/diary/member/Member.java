@@ -1,5 +1,6 @@
 package com.example.demo_project.diary.member;
 
+import com.example.demo_project.diary.article.Article;
 import com.example.demo_project.diary.category.Category;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,4 +36,7 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Category> categoryList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Article> articleList = new ArrayList<>();
 }

@@ -52,7 +52,7 @@ public class MainService {
             category.setMember(member);
             category.setCreateDate(LocalDateTime.now());
             category.setImgUrl("https://img.freepik.com/free-vector/note-paper-background-with-hole-punches_78370-2344.jpg?t=st=1716899988~exp=1716903588~hmac=fc80740f553db0d52574670556a5ceec88475e883dee92b9a6da818583435ba6&w=1380");
-            Article article = this.articleService.saveDefault();
+            Article article = this.articleService.saveDefault(member);
             category.addToArticle(article);
             this.categoryService.save(category);
         }
@@ -61,10 +61,13 @@ public class MainService {
         Article targetArticle = articleList.getLast();
         List<Article> searchedArticleList = new ArrayList<>();
         if (type.equals("title")) {
-            searchedArticleList = this.articleService.searchedTitle(keyword);
+            searchedArticleList = this.articleService.searchedTitle(member,keyword);
         }
         if (type.equals("content")) {
-            searchedArticleList = this.articleService.searchedContent(keyword);
+            searchedArticleList = this.articleService.searchedContent(member,keyword);
+        }
+        if (type.equals("all")){
+            searchedArticleList = this.articleService.defaultSearchedList(member, keyword);
         }
         ListDataDto listDataDto = new ListDataDto(categoryList, targetCategory, articleList, targetArticle, searchedArticleList);
         return listDataDto;
@@ -86,7 +89,7 @@ public class MainService {
         category.setName(name);
         category.setMember(member);
         category.setCreateDate(LocalDateTime.now());
-        Article article = this.articleService.saveDefault();
+        Article article = this.articleService.saveDefault(member);
         category.addToArticle(article);
         return this.categoryService.save(category);
     }

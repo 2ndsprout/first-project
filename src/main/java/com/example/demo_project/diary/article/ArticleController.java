@@ -4,6 +4,7 @@ import com.example.demo_project.diary.ListDataDto;
 import com.example.demo_project.diary.MainService;
 import com.example.demo_project.diary.ParamHandler;
 import com.example.demo_project.diary.category.Category;
+import com.example.demo_project.diary.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,9 +25,11 @@ public class ArticleController {
 
     @GetMapping("/list")
     public String list (@PathVariable("categoryId")Long categoryId, Model model, Principal principal, ParamHandler paramHandler) {
+
         Category category = this.mainService.getCategory(categoryId);
+        Member member = category.getMember();
         if (category.getArticleList().isEmpty()) {
-            Article article = this.articleService.saveDefault();
+            Article article = this.articleService.saveDefault(member);
             category.addToArticle(article);
             this.mainService.save(category);
             return "redirect:/category/%d/articles/list".formatted(categoryId);
@@ -52,7 +55,8 @@ public class ArticleController {
     @PostMapping("/create")
     public String create (@PathVariable("categoryId")Long categoryId) {
         Category category = this.mainService.getCategory(categoryId);
-        Article article = this.articleService.saveDefault();
+        Member member = category.getMember();
+        Article article = this.articleService.saveDefault(member);
         category.addToArticle(article);
         this.mainService.save(category);
 

@@ -1,6 +1,7 @@
 package com.example.demo_project.diary.article;
 
 import com.example.demo_project.diary.category.Category;
+import com.example.demo_project.diary.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     List<Article> findByCategoryOrderByCreateDateDesc (Category category);
-    List<Article> findByTitleContaining (String keyword);
-    List<Article> findByContentContaining (String keyword);
+    List<Article> findByMemberAndTitleContaining(Member member, String keyword);
+    List<Article> findByMemberAndContentContaining(Member member, String keyword);
+    List<Article> findByMemberAndTitleContainingOrMemberAndContentContaining(Member member, String titleKeyword, Member member1, String contentKeyword);
 }

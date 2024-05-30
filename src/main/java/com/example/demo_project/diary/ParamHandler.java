@@ -16,6 +16,6 @@ public class ParamHandler {
     public ParamHandler () {
         this.keyword = "";
         this.isSearchModal = false;
-        this.type = "";
+        this.type = "all";
     }
 }

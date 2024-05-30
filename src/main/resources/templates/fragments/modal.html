@@ -40,9 +40,9 @@
 <dialog th:fragment="searchModal" id="searchModal" class="modal">
     <div class="modal-box w-[1000px]">
         <div class="h-[15%]">
-            <form id="searchForm" action="" method="GET" class="mx-auto flex justify-start gap-3">
+            <form id="searchForm" action="" method="GET" class="mx-auto flex items-center justify-start gap-3">
                 <select class="flex justify-end select select-bordered select-sm w-[120px] max-w-xs" id="searchType" onchange="updateSearchType()">
-                    <option disabled selected value="">Type</option>
+                    <option id="allOption" value="all">All</option>
                     <option id="titleOption" value="title">Title Search</option>
                     <option id="contentOption" value="content">Content Search</option>
                 </select>
@@ -63,7 +63,7 @@
                        th:text="${article.title}"
                        th:class="${itemAnchor}"></a>
                 </div>
-                <p class="text-sm text-gray-500" th:text="${#strings.abbreviate(article.content, 10)}"></p>
+                <p class="text-sm text-gray-500" th:text="${#strings.abbreviate(article.content, 20)}"></p>
             </li>
         </ul>
         <div class="modal-action">
@@ -86,8 +86,8 @@
             hiddenInput.value = 'title';
         } else if (contentOption.selected) {
             hiddenInput.value = 'content';
-        } else {
-            hiddenInput.value = '';
+        } else if (allOption.selected) {
+            hiddenInput.value = 'all';
         }
     }
 
