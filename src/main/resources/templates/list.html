@@ -1,9 +1,17 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content"
      th:with="categoryList=${listDataDto.categoryList},
-     targetCategory=${listDataDto.targetCategory},
-     articleList=${listDataDto.articleList},
-     targetArticle=${listDataDto.targetArticle}">
+               targetCategory=${listDataDto.targetCategory},
+               articleList=${listDataDto.articleList},
+               targetArticle=${listDataDto.targetArticle},
+               searchedArticleList=${listDataDto.searchedArticleList},
+               keyword=${paramHandler.keyword},
+               isSearchModal=${paramHandler.isSearchModal},
+               type=${paramHandler.type}">
+
+    <input type="hidden" name="isSearchModal" id="isSearchModal" th:value="${isSearchModal}">
+
+    <dialog th:replace="~{fragments/modal::searchModal}"></dialog>
 
     <div class="flex h-screen">
         <div class="card bg-base-100 shadow-xl h-full w-[20%] flex flex-col gap-3">
@@ -34,12 +42,36 @@
                     <input type="hidden" name="content" th:value="${targetArticle.content}" id="editor-body">
                     <div id="editor" class="w-full"></div>
                 </form>
-                <button class="btn btn-info w-[45%] mt-[55px] postActionBtn" type="button" value="수정" onclick="updateForm()">
-                    <i class="fa-solid fa-pen-to-square"></i>edit
-                </button>
+                <div class="flex w-full mx-auto justify-center gap-5">
+                    <button class="btn btn-info w-[300px]" type="button" onclick="updateForm()">
+                        <i class="fa-solid fa-pen-to-square"></i>edit
+                    </button>
+                    <form th:action="@{|/category/${targetCategory.id}/articles/${targetArticle.id}/delete|}" method="post" id="deleteFrom">
+                        <button class="btn btn-error w-[300px]" type="button" onclick="deleteForm()">
+                            <i class="fa-solid fa-trash"></i>delete
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
     <script src="/dist/bundle.js"></script>
+    <script>
+        window.onload = () => {
+
+            const isSearchModal = document.querySelector("#isSearchModal").value;
+            if (JSON.parse(isSearchModal)) {
+                searchModal.showModal();
+            }
+        }
+
+        function deleteForm() {
+            const form = document.getElementById("deleteFrom");
+            if(confirm("삭제하시겠습니까?")){
+                form.submit();
+            }
+        }
+    </script>
+    <script th:replace="~{fragments/modal::searchModalJS}"></script>
 </div>
 </html>

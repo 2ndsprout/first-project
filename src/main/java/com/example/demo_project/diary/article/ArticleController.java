@@ -2,6 +2,7 @@ package com.example.demo_project.diary.article;
 
 import com.example.demo_project.diary.ListDataDto;
 import com.example.demo_project.diary.MainService;
+import com.example.demo_project.diary.ParamHandler;
 import com.example.demo_project.diary.category.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,24 +23,29 @@ public class ArticleController {
     private final MainService mainService;
 
     @GetMapping("/list")
-    public String list (@PathVariable("categoryId")Long categoryId, Model model, Principal principal) {
+    public String list (@PathVariable("categoryId")Long categoryId, Model model, Principal principal, ParamHandler paramHandler) {
         Category category = this.mainService.getCategory(categoryId);
+        if (category.getArticleList().isEmpty()) {
+            Article article = this.articleService.saveDefault();
+            category.addToArticle(article);
+            this.mainService.save(category);
+            return "redirect:/category/%d/articles/list".formatted(categoryId);
+        }
         Long articleId = category.getArticleList().getFirst().getId();
-        ListDataDto listDataDto = this.mainService.getListData(categoryId,articleId, principal);
-
+        ListDataDto listDataDto = this.mainService.getListData(categoryId, articleId, principal, paramHandler.getKeyword(), paramHandler.getType());
         model.addAttribute("listDataDto", listDataDto);
-
+        model.addAttribute("paramHandler", paramHandler);
         return "list";
     }
 
     @GetMapping("/{articleId}")
     public String detail(@PathVariable("categoryId")Long categoryId,
-                         @PathVariable("articleId") Long articleId, Model model, Principal principal) {
+                         @PathVariable("articleId") Long articleId, Model model, Principal principal, ParamHandler paramHandler) {
 
-        ListDataDto listDataDto = this.mainService.getListData(categoryId,articleId, principal);
+        ListDataDto listDataDto = this.mainService.getListData(categoryId,articleId, principal, paramHandler.getKeyword(), paramHandler.getType());
 
         model.addAttribute("listDataDto", listDataDto);
-
+        model.addAttribute("paramHandler", paramHandler);
         return "list";
     }
 
@@ -59,5 +65,13 @@ public class ArticleController {
         Article article = this.articleService.update(articleId, title, content);
 
         return "redirect:/category/%d/articles/%d".formatted(categoryId, article.getId());
+    }
+
+    @PostMapping("/{articleId}/delete")
+    public String delete(@PathVariable("categoryId")Long categoryId,
+                         @PathVariable("articleId") Long articleId) {
+        this.articleService.delete(articleId);
+
+        return "redirect:/category/%d/articles/list".formatted(categoryId);
     }
 }

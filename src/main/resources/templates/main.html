@@ -3,10 +3,18 @@
      th:with="categoryList=${listDataDto.categoryList},
                targetCategory=${listDataDto.targetCategory},
                articleList=${listDataDto.articleList},
-               targetArticle=${listDataDto.targetArticle}">
+               targetArticle=${listDataDto.targetArticle},
+               searchedArticleList=${listDataDto.searchedArticleList},
+               keyword=${paramHandler.keyword},
+               isSearchModal=${paramHandler.isSearchModal},
+               type=${paramHandler.type}">
+
+    <input type="hidden" name="isSearchModal" id="isSearchModal" th:value="${isSearchModal}">
+
     <div class="flex flex-col gap-3">
 
         <dialog th:replace="~{fragments/modal::addModal}"></dialog>
+        <dialog th:replace="~{fragments/modal::searchModal}"></dialog>
 
         <div class="flex flex-wrap justify-center gap-3 my-auto mx-auto h-[90%]">
             <div th:each="category : ${categoryList}" class="h-[440px] card w-96 bg-base-100 shadow-xl">
@@ -47,5 +55,16 @@
             </div>
         </div>
     </div>
+
+    <script>
+        window.onload = () => {
+
+            const isSearchModal = document.querySelector("#isSearchModal").value;
+            if (JSON.parse(isSearchModal)) {
+                searchModal.showModal();
+            }
+        }
+    </script>
+    <script th:replace="~{fragments/modal::searchModalJS}"></script>
 </div>
 </html>

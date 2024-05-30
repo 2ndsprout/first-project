@@ -40,4 +40,15 @@ public class ArticleService {
         article.setContent(content);
         return this.articleRepository.save(article);
     }
+
+    public void delete (Long id) {
+        this.articleRepository.deleteById(id);
+    }
+
+    public List<Article> searchedTitle (String keyword) {
+        return this.articleRepository.findByTitleContaining(keyword);
+    }
+    public List<Article> searchedContent (String keyword) {
+        return this.articleRepository.findByContentContaining(keyword);
+    }
 }

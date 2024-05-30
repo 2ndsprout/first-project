@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,8 +30,8 @@ public class MainService {
         return this.categoryService.getCategoryListByMember(member);
     }
 
-    public ListDataDto getListData(Long categoryId, Long articleId, Principal principal) {
-        ListDataDto listDataDto = this.getDefaultListData(principal);
+    public ListDataDto getListData(Long categoryId, Long articleId, Principal principal, String keyword, String type) {
+        ListDataDto listDataDto = this.getDefaultListData(principal, keyword, type);
         Category targetCategory = this.getCategory(categoryId);
         Article targetArticle = this.articleService.getArticle(articleId);
 
@@ -41,7 +42,7 @@ public class MainService {
         return listDataDto;
     }
 
-    public ListDataDto getDefaultListData(Principal principal) {
+    public ListDataDto getDefaultListData(Principal principal, String keyword, String type) {
 
         Member member = this.getMember(principal.getName());
         List<Category> categoryList = this.getCategoryListByMember(member);
@@ -58,8 +59,14 @@ public class MainService {
         Category targetCategory = categoryList.getLast();
         List<Article> articleList = targetCategory.getArticleList();
         Article targetArticle = articleList.getLast();
-
-        ListDataDto listDataDto = new ListDataDto(categoryList, targetCategory, articleList, targetArticle);
+        List<Article> searchedArticleList = new ArrayList<>();
+        if (type.equals("title")) {
+            searchedArticleList = this.articleService.searchedTitle(keyword);
+        }
+        if (type.equals("content")) {
+            searchedArticleList = this.articleService.searchedContent(keyword);
+        }
+        ListDataDto listDataDto = new ListDataDto(categoryList, targetCategory, articleList, targetArticle, searchedArticleList);
         return listDataDto;
     }
 

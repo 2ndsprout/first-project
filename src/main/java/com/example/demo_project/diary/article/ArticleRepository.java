@@ -8,4 +8,6 @@ import java.util.List;
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     List<Article> findByCategoryOrderByCreateDateDesc (Category category);
+    List<Article> findByTitleContaining (String keyword);
+    List<Article> findByContentContaining (String keyword);
 }

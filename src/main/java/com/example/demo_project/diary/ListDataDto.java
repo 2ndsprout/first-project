@@ -18,4 +18,5 @@ public class ListDataDto {
     Category targetCategory;
     List<Article> articleList;
     Article targetArticle;
+    List<Article> searchedArticleList;
 }

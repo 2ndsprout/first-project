@@ -37,3 +37,71 @@
     </div>
 </dialog>
 
+<dialog th:fragment="searchModal" id="searchModal" class="modal">
+    <div class="modal-box w-[1000px]">
+        <div class="h-[15%]">
+            <form id="searchForm" action="" method="GET" class="mx-auto flex justify-start gap-3">
+                <select class="flex justify-end select select-bordered select-sm w-[120px] max-w-xs" id="searchType" onchange="updateSearchType()">
+                    <option disabled selected value="">Type</option>
+                    <option id="titleOption" value="title">Title Search</option>
+                    <option id="contentOption" value="content">Content Search</option>
+                </select>
+                <input type="hidden" name="isSearchModal" value="true">
+                <input type="text" name="keyword" class="input input-bordered" placeholder="Search...">
+                <input type="hidden" name="type" id="searchTypeHidden">
+                <button type="submit" class="btn">
+                    <i class="fa-solid fa-magnifying-glass"></i> Search
+                </button>
+            </form>
+        </div>
+        <ul class="overflow-auto h-[70%] border-3"
+        th:with="itemsHover='hover:bg-gray-600 hover:cursor-pointer p-[10px] flex', itemAnchor='inline-block w-[100%] getActionBtn'">
+            <li th:each="article : ${searchedArticleList}" th:class="${itemsHover}">
+                <i class="fa-solid fa-book p-[10px]"></i>
+                <a th:href="@{|/category/${article.category.id}/articles/${article.id}|}"
+                   th:text="${article.title}"
+                   th:class="${itemAnchor}"/>
+            </li>
+        </ul>
+        <div class="modal-action">
+            <form method="dialog">
+                <button class="btn">
+                    <i class="fa-solid fa-xmark"></i>Close
+                </button>
+            </form>
+        </div>
+    </div>
+</dialog>
+
+<script th:fragment="searchModalJS">
+
+    function updateSearchType() {
+        const titleOption = document.getElementById('titleOption');
+        const contentOption = document.getElementById('contentOption');
+        const hiddenInput = document.getElementById('searchTypeHidden');
+
+        if (titleOption.selected) {
+            hiddenInput.value = 'title';
+        } else if (contentOption.selected) {
+            hiddenInput.value = 'content';
+        } else {
+            hiddenInput.value = '';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const selectElement = document.getElementById('searchType');
+        selectElement.addEventListener('change', updateSearchType);
+    });
+
+    document.getElementById('searchForm').addEventListener('submit', (event) => {
+        const hiddenInput = document.getElementById('searchTypeHidden');
+
+        updateSearchType();
+
+        if (!hiddenInput.value) {
+            event.preventDefault();
+            alert('Please select a search type.');
+        }
+    });
+</script>
