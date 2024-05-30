@@ -28,5 +28,13 @@
 
         <input type="submit" value="회원가입" class="btn btn-primary w-[800px]">
     </form>
+    <div id="params">
+        <input type="hidden" name="keyword" th:value="${keyword}">
+        <input type="hidden" name="type" th:value="${type}">
+    </div>
+    <div>
+        <input type="hidden" id="isSearchModal" name="isSearchModal" th:value="${isSearchModal}">
+    </div>
+    <script src="/main.js"></script>
 </div>
 </html>

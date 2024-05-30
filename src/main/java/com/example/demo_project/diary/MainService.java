@@ -69,7 +69,7 @@ public class MainService {
         if (type.equals("all")){
             searchedArticleList = this.articleService.defaultSearchedList(member, keyword);
         }
-        ListDataDto listDataDto = new ListDataDto(categoryList, targetCategory, articleList, targetArticle, searchedArticleList);
+        ListDataDto listDataDto = new ListDataDto(categoryList, targetCategory, articleList, targetArticle, searchedArticleList, member);
         return listDataDto;
     }
 

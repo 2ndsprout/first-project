@@ -1,0 +1,25 @@
+<html layout:decorate="~{layout}"
+      th:with="categoryList=${listDataDto.categoryList},
+         targetCategory=${listDataDto.targetCategory},
+         articleList=${listDataDto.articleList},
+         targetArticle=${listDataDto.targetArticle},
+         searchedArticleList=${listDataDto.searchedArticleList},
+         member=${listDataDto.member},
+         keyword=${paramHandler.keyword},
+         isSearchModal=${paramHandler.isSearchModal},
+         type=${paramHandler.type}">
+<div layout:fragment="content">
+
+    <div th:text="${member.nickname}"></div>
+    <div th:text="${member.password}"></div>
+
+    <div id="params">
+        <input type="hidden" name="keyword" th:value="${keyword}">
+        <input type="hidden" name="type" th:value="${type}">
+    </div>
+    <div>
+        <input type="hidden" id="isSearchModal" name="isSearchModal" th:value="${isSearchModal}">
+    </div>
+    <script src="/main.js"></script>
+</div>
+</html>

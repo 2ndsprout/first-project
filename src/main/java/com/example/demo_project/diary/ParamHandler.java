@@ -22,7 +22,9 @@ public class ParamHandler {
         this.type = "all";
     }
     public String getQueryParam () {
-        return String.format("?keyword=%s&type=%s".formatted(URLEncoder.encode(keyword, StandardCharsets.UTF_8),URLEncoder.encode(type, StandardCharsets.UTF_8)));
+        return String.format("?keyword=%s&type=%s",
+                URLEncoder.encode(keyword, StandardCharsets.UTF_8),
+                URLEncoder.encode(type, StandardCharsets.UTF_8));
     }
     public String getRedirectUrl (String url) {
         return "redirect:" + url + getQueryParam();

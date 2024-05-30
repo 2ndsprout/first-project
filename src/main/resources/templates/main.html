@@ -1,13 +1,14 @@
-<html layout:decorate="~{layout}">
-<div layout:fragment="content"
-     th:with="categoryList=${listDataDto.categoryList},
-               targetCategory=${listDataDto.targetCategory},
-               articleList=${listDataDto.articleList},
-               targetArticle=${listDataDto.targetArticle},
-               searchedArticleList=${listDataDto.searchedArticleList},
-               keyword=${paramHandler.keyword},
-               isSearchModal=${paramHandler.isSearchModal},
-               type=${paramHandler.type}">
+<html layout:decorate="~{layout}"
+      th:with="categoryList=${listDataDto.categoryList},
+         targetCategory=${listDataDto.targetCategory},
+         articleList=${listDataDto.articleList},
+         targetArticle=${listDataDto.targetArticle},
+         searchedArticleList=${listDataDto.searchedArticleList},
+         member=${listDataDto.member},
+         keyword=${paramHandler.keyword},
+         isSearchModal=${paramHandler.isSearchModal},
+         type=${paramHandler.type}">
+<div layout:fragment="content">
 
     <div class="flex flex-col gap-3">
 

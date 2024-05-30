@@ -1,18 +1,28 @@
 package com.example.demo_project.diary.member;
 
+import com.example.demo_project.diary.ListDataDto;
+import com.example.demo_project.diary.MainService;
+import com.example.demo_project.diary.ParamHandler;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberService memberService;
+    private final MainService mainService;
 
     @GetMapping("/signup")
     public String signup (MemberForm memberForm) {
@@ -46,5 +56,20 @@ public class MemberController {
     @GetMapping("/login")
     public String login () {
         return "login_form";
+    }
+
+    @GetMapping("/member/{username}/profile")
+    public String profile(@PathVariable("username") String username,
+                          Principal principal, Model model, ParamHandler paramHandler) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+
+        if (!currentUsername.equals(username)) {
+            return paramHandler.getRedirectUrl("/");
+        }
+        ListDataDto listDataDto = this.mainService.getDefaultListData(principal, paramHandler.getKeyword(), paramHandler.getType());
+        model.addAttribute("listDataDto", listDataDto);
+        model.addAttribute("paramHandler", paramHandler);
+        return "profile_form";
     }
 }

@@ -20,8 +20,8 @@
 <dialog th:fragment="updateModal" th:attr="id=${'updateModal' + category.id}" class="modal">
     <div class="modal-box w-[700px] items-center flex flex-col">
         <form th:action="@{|/category/${category.id}/update|}" class="h-[85%]" method="post">
-            <input type="text" name="name" class="input input-bordered input-primary w-[100%]" th:value="${category.name}">
-            <input type="text" name="imgUrl" class="input input-bordered input-primary w-[100%]" th:value="${category.imgUrl}">
+            <input type="text" name="name" class="input input-bordered input-primary w-[100%]" th:value="${category.name}" placeholder="What's the Title">
+            <input type="text" name="imgUrl" class="input input-bordered input-primary w-[100%]" th:value="${category.imgUrl}" placeholder="Image Url">
             <button type="submit" class="btn btn-info w-[100%] postActionBtn">
                 <i class="fa-solid fa-pen-to-square"></i>
                 <span>edit & sumbit</span>
@@ -43,8 +43,8 @@
             <form id="searchForm" action="" method="GET" class="mx-auto flex items-center justify-start gap-3">
                 <select class="flex justify-end select select-bordered select-sm w-[120px] max-w-xs" id="searchType" onchange="updateSearchType()">
                     <option id="allOption" value="all">All</option>
-                    <option id="titleOption" value="title">Title Search</option>
-                    <option id="contentOption" value="content">Content Search</option>
+                    <option id="titleOption" value="title">Title</option>
+                    <option id="contentOption" value="content">Content</option>
                 </select>
                 <input type="hidden" name="isSearchModal" value="true">
                 <input type="text" name="keyword" th:value="${keyword}" class="input input-bordered" placeholder="Search...">
