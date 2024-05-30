@@ -6039,6 +6039,10 @@ details.collapse summary::-webkit-details-marker {
   margin-top: 50px;
 }
 
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
 .\!block {
   display: block !important;
 }
@@ -6373,6 +6377,11 @@ details.collapse summary::-webkit-details-marker {
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .uppercase {

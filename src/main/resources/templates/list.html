@@ -18,14 +18,22 @@
         <div class="card bg-base-100 shadow-xl h-full w-[20%] flex flex-col gap-3">
             <h2 class="card-title p-10px justify-center" th:text="${targetCategory.name}"></h2>
             <div class="card-body overflow-auto flex-grow">
-                <ul class="menu">
-                    <li class="text-lg" th:each="article : ${articleList}">
-                        <a class="getActionBtn"
-                           th:data-url="@{|/category/${targetCategory.id}/articles/${article.id}|}"
-                           th:classappend="${article.id == targetArticle.id} ? 'bg-gray-600' : '' ">
-                            <i class="fa-regular fa-note-sticky"></i>
-                            <span th:text="${article.title}"></span>
-                        </a>
+                <ul class="menu"
+                    th:with="itemAnchor='inline-block w-[100%]'">
+                    <li th:each="article : ${articleList}"
+                        th:classappend="${article.id == targetArticle.id} ? 'bg-gray-600' : ''">
+                        <div class="flex items-center">
+                            <a class="getActionBtn text-lg"
+                               th:classappend="${itemAnchor}"
+                               th:data-url="@{|/category/${targetCategory.id}/articles/${article.id}|}">
+                                <i class="fa-regular fa-note-sticky"></i>
+                                <span th:text="${article.title}"></span>
+                                <span class="text-xs text-gray-500 flex">
+                                    <i class="fa-regular fa-calendar mr-2"></i>
+                                    <p th:text="${#temporals.format(article.createDate, 'yyyy-MM-dd HH:mm')}"></p>
+                                </span>
+                            </a>
+                        </div>
                     </li>
                 </ul>
             </div>
