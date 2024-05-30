@@ -6025,6 +6025,18 @@ details.collapse summary::-webkit-details-marker {
   margin-bottom: 30px;
 }
 
+.ml-\[2px\] {
+  margin-left: 2px;
+}
+
+.ml-\[5px\] {
+  margin-left: 5px;
+}
+
+.mr-\[5px\] {
+  margin-right: 5px;
+}
+
 .\!block {
   display: block !important;
 }
@@ -6351,6 +6363,11 @@ details.collapse summary::-webkit-details-marker {
   line-height: 1.75rem;
 }
 
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
 .uppercase {
   text-transform: uppercase;
 }
@@ -6370,6 +6387,11 @@ details.collapse summary::-webkit-details-marker {
 .ordinal {
   --tw-ordinal: ordinal;
   font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
+}
+
+.text-gray-500 {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
 .underline {

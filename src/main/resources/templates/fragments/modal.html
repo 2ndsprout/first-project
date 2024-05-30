@@ -55,12 +55,15 @@
             </form>
         </div>
         <ul class="overflow-auto h-[70%] border-3"
-        th:with="itemsHover='hover:bg-gray-600 hover:cursor-pointer p-[10px] flex', itemAnchor='inline-block w-[100%] getActionBtn'">
+            th:with="itemsHover='hover:bg-gray-600 hover:cursor-pointer p-[10px] flex flex-col', itemAnchor='inline-block w-[100%] getActionBtn'">
             <li th:each="article : ${searchedArticleList}" th:class="${itemsHover}">
-                <i class="fa-solid fa-book p-[10px]"></i>
-                <a th:href="@{|/category/${article.category.id}/articles/${article.id}|}"
-                   th:text="${article.title}"
-                   th:class="${itemAnchor}"/>
+                <div class="flex items-center">
+                    <i class="fa-solid fa-book p-[10px]"></i>
+                    <a th:href="@{|/category/${article.category.id}/articles/${article.id}|}"
+                       th:text="${article.title}"
+                       th:class="${itemAnchor}"></a>
+                </div>
+                <p class="text-sm text-gray-500" th:text="${#strings.abbreviate(article.content, 10)}"></p>
             </li>
         </ul>
         <div class="modal-action">
@@ -72,7 +75,6 @@
         </div>
     </div>
 </dialog>
-
 <script th:fragment="searchModalJS">
 
     function updateSearchType() {
