@@ -53,11 +53,11 @@
                     <div id="editor" class="w-full"></div>
                 </form>
                 <div class="flex w-full mx-auto justify-center gap-5">
-                    <button class="btn btn-info w-[300px] postActionBtn" type="button" onclick="updateForm()">
+                    <button class="btn btn-info w-[300px] postActionBtn updateActionBtn" type="button">
                         <i class="fa-solid fa-pen-to-square"></i>edit
                     </button>
-                    <form th:action="@{|/category/${targetCategory.id}/articles/${targetArticle.id}/delete|}" method="post" id="deleteFrom">
-                        <button class="btn btn-error w-[300px] postActionBtn" type="button" onclick="deleteForm()">
+                    <form th:action="@{|/category/${targetCategory.id}/articles/${targetArticle.id}/delete|}" method="post" id="deleteForm">
+                        <button class="btn btn-error w-[300px] postActionBtn deleteActionBtn">
                             <i class="fa-solid fa-trash"></i>delete
                         </button>
                     </form>
@@ -72,16 +72,8 @@
     <div>
         <input type="hidden" id="isSearchModal" name="isSearchModal" th:value="${isSearchModal}">
     </div>
+    <script src="/js/main.js"></script>
     <script src="/dist/bundle.js"></script>
-    <script>
-        function deleteForm() {
-            const form = document.getElementById("deleteFrom");
-            if(confirm("삭제하시겠습니까?")){
-                form.submit();
-            }
-        }
-    </script>
     <script th:replace="~{fragments/modal::searchModalJS}"></script>
-    <script src="/main.js"></script>
 </div>
 </html>

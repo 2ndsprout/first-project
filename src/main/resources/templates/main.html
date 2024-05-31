@@ -37,8 +37,8 @@
                                 <i class="fa-solid fa-pen-to-square"></i>edit
                             </button>
                         </div>
-                        <form th:action="@{|/category/${category.id}/delete|}" method="post">
-                            <button type="submit" class="btn btn-xs btn-error postActionBtn">
+                        <form th:action="@{|/category/${category.id}/delete|}" method="post" id="deleteForm">
+                            <button class="btn btn-xs btn-error postActionBtn deleteActionBtn">
                                 <i class="fa-solid fa-trash"></i>delete
                             </button>
                         </form>
@@ -63,7 +63,7 @@
         <input type="hidden" id="isSearchModal" name="isSearchModal" th:value="${isSearchModal}">
     </div>
 
-    <script src="/main.js"></script>
+    <script src="/js/main.js"></script>
     <script th:replace="~{fragments/modal::searchModalJS}"></script>
 </div>
 </html>

@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
     theme: 'dark',
     plugins: [CodeSyntax, CodeSyntaxHighlight],
     initialValue: document.getElementById("editor-body").value,
-    language: 'ko-KR',
   });
 
   window.updateForm = function() {
