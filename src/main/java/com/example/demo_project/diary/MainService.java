@@ -33,8 +33,8 @@ public class MainService {
         return this.categoryService.getCategoryListByMember(member);
     }
 
-    public ListDataDto getListData(Long categoryId, Long articleId, Principal principal, String keyword, String type) {
-        ListDataDto listDataDto = this.getDefaultListData(principal, keyword, type);
+    public ListDataDto getListData(Long categoryId, Long articleId, Member member, String keyword, String type) {
+        ListDataDto listDataDto = this.getDefaultListData(member, keyword, type);
         Category targetCategory = this.getCategory(categoryId);
         Article targetArticle = this.articleService.getArticle(articleId);
 
@@ -45,9 +45,8 @@ public class MainService {
         return listDataDto;
     }
 
-    public ListDataDto getDefaultListData(Principal principal, String keyword, String type) {
+    public ListDataDto getDefaultListData(Member member, String keyword, String type) {
 
-        Member member = this.getMember(principal.getName());
         List<Category> categoryList = this.getCategoryListByMember(member);
         if (categoryList.isEmpty()) {
             Category category = new Category();

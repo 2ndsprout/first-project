@@ -6240,6 +6240,10 @@ details.collapse summary::-webkit-details-marker {
   width: 60%;
 }
 
+.w-auto {
+  width: auto;
+}
+
 .max-w-xs {
   max-width: 20rem;
 }

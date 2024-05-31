@@ -69,7 +69,7 @@ public class MemberController {
         Long categoryId = member.getCategoryList().getLast().getId();
 
         this.mainService.checkRole(categoryId, principal);
-        ListDataDto listDataDto = this.mainService.getDefaultListData(principal, paramHandler.getKeyword(), paramHandler.getType());
+        ListDataDto listDataDto = this.mainService.getDefaultListData(member, paramHandler.getKeyword(), paramHandler.getType());
         model.addAttribute("listDataDto", listDataDto);
         model.addAttribute("paramHandler", paramHandler);
         return "profile_form";

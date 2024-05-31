@@ -53,7 +53,7 @@ public class ArticleController {
             return paramHandler.getRedirectUrl("/category/%d/articles/list".formatted(categoryId));
         }
         Long articleId = category.getArticleList().getFirst().getId();
-        ListDataDto listDataDto = this.mainService.getListData(categoryId, articleId, principal, paramHandler.getKeyword(), paramHandler.getType());
+        ListDataDto listDataDto = this.mainService.getListData(categoryId, articleId, member, paramHandler.getKeyword(), paramHandler.getType());
         model.addAttribute("listDataDto", listDataDto);
         model.addAttribute("paramHandler", paramHandler);
         return "list";
@@ -65,8 +65,9 @@ public class ArticleController {
                          @PathVariable("articleId") Long articleId, Model model, Principal principal, ParamHandler paramHandler) {
 
         this.mainService.checkRole(categoryId, principal);
+        Member member = this.mainService.getCategory(categoryId).getMember();
 
-        ListDataDto listDataDto = this.mainService.getListData(categoryId,articleId, principal, paramHandler.getKeyword(), paramHandler.getType());
+        ListDataDto listDataDto = this.mainService.getListData(categoryId,articleId, member, paramHandler.getKeyword(), paramHandler.getType());
 
         model.addAttribute("listDataDto", listDataDto);
         model.addAttribute("paramHandler", paramHandler);
