@@ -39,4 +39,5 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Article> articleList = new ArrayList<>();
+
 }

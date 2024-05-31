@@ -4,13 +4,18 @@ import com.example.demo_project.diary.member.Member;
 import com.example.demo_project.diary.member.MemberRepository;
 import com.example.demo_project.diary.member.OAuth2Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -25,12 +30,24 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         OAuth2User user = super.loadUser(userRequest);
         OAuth2Member oAuth2Member;
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        String usernameKey;
+        List<GrantedAuthority> authorities = new ArrayList<>();
 
         switch (registrationId) {
-            case "google" -> oAuth2Member = this.googleService(user, registrationId);
-            case "naver" -> oAuth2Member = this.naverService(user, registrationId);
-            case "kakao" -> oAuth2Member = this.kakaoService(user,registrationId);
-            default -> throw new IllegalStateException("Unexpected value: " + registrationId);
+            case "google":
+                oAuth2Member = this.googleService(user, registrationId);
+                usernameKey = "sub";
+                break;
+            case "naver":
+                oAuth2Member = this.naverService(user, registrationId);
+                usernameKey = "response";
+                break;
+            case "kakao":
+                oAuth2Member = this.kakaoService(user, registrationId);
+                usernameKey = "id";
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + registrationId);
         }
         Optional<Member> _member = this.memberRepository.findByUsername(oAuth2Member.getUsername());
         Member member = new Member();
@@ -38,6 +55,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         if (_member.isPresent()) {
             member = _member.get();
             System.out.println("기존 회원 로그인");
+            authorities.add(new SimpleGrantedAuthority("ROLE_MEMBER"));
         }
         else {
             member.setUsername(oAuth2Member.getUsername());
@@ -46,10 +64,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             member.setEmail(oAuth2Member.getEmail());
             member.setCreateDate(LocalDateTime.now());
             this.memberRepository.save(member);
-            System.out.println("신규회원 DB 저장 및 로그인");
+            authorities.add(new SimpleGrantedAuthority("ROLE_MEMBER"));
         }
-
-        return super.loadUser(userRequest);
+        return new DefaultOAuth2User(authorities, user.getAttributes(), usernameKey);
     }
 
     public OAuth2Member googleService (OAuth2User user, String registrationId) {

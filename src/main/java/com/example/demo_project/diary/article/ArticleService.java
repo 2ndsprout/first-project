@@ -56,4 +56,10 @@ public class ArticleService {
     public List<Article> defaultSearchedList (Member member, String keyword) {
         return this.articleRepository.findByMemberAndTitleContainingOrMemberAndContentContaining(member, keyword, member, keyword);
     }
+    public List<Article> searchedAllArticle (String keyword) {
+        return this.articleRepository.findByTitleContainingOrContentContaining(keyword, keyword);
+    }
+    public List<Article> findAllArticles() {
+        return this.articleRepository.findAll();
+    }
 }

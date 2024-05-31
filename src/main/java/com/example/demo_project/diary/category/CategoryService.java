@@ -4,7 +4,6 @@ import com.example.demo_project.diary.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,5 +46,8 @@ public class CategoryService {
 
     public Category getCategory (Long categoryId) {
         return this.categoryRepository.findById(categoryId).orElseThrow();
+    }
+    public List<Category> findAllCategories() {
+        return this.categoryRepository.findAll();
     }
 }

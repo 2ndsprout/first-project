@@ -10,8 +10,6 @@
          type=${paramHandler.type}">
 <div layout:fragment="content">
 
-    <input type="hidden" name="isSearchModal" id="isSearchModal" th:value="${isSearchModal}">
-
     <dialog th:replace="~{fragments/modal::searchModal}"></dialog>
 
     <div class="flex h-screen">

@@ -1,0 +1,77 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content"
+     th:with="categoryList=${listDataDto.categoryList},
+         targetCategory=${listDataDto.targetCategory},
+         articleList=${listDataDto.articleList},
+         targetArticle=${listDataDto.targetArticle},
+         searchedArticleList=${listDataDto.searchedArticleList},
+         keyword=${paramHandler.keyword},
+         isSearchModal=${paramHandler.isSearchModal},
+         type=${paramHandler.type}">
+
+    <dialog th:replace="~{fragments/modal::searchModal}"></dialog>
+
+    <div class="flex h-screen">
+        <div class="card bg-base-100 shadow-xl h-full w-[50%] flex flex-col gap-3">
+            <h2 class="card-title p-10px justify-center">Member List</h2>
+            <div class="card-body overflow-auto flex-grow">
+                <ul class="menu"
+                    th:each="member : ${memberList}"
+                    th:with="itemAnchor='inline-block w-2/1'">
+                    <li>
+                        <div class="flex items-center">
+                            <a class="getActionBtn text-lg"
+                               th:classappend="${itemAnchor}"
+                               th:data-url="@{|/member/${member.username}/profile|}">
+                                <i class="fa-solid fa-user"></i>
+                                <span th:text="${member.nickname}"></span>
+                                <span class="text-xs text-gray-500 flex">
+                                    <i class="fa-regular fa-calendar mr-2"></i>
+                                    <p th:text="${#temporals.format(member.createDate, 'yyyy-MM-dd HH:mm')}"></p>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-actions justify-center items-center">
+            </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-xl h-full w-2/1 flex flex-col gap-3">
+            <h2 class="card-title p-10px justify-center">Category List</h2>
+            <div class="card-body overflow-auto flex-grow">
+                <ul class="menu"
+                    th:each="category : ${categoryList}"
+                    th:with="itemAnchor='inline-block w-[100%]'">
+                    <li th:text="${category.name}"></li>
+                    <li th:each="article : ${category.articleList}">
+                        <div class="flex items-center">
+                            <a class="getActionBtn text-lg"
+                               th:classappend="${itemAnchor}"
+                               th:data-url="@{|/category/${targetCategory.id}/articles/${article.id}|}">
+                                <i class="fa-regular fa-note-sticky"></i>
+                                <span th:text="${article.title}"></span>
+                                <span class="text-xs text-gray-500 flex">
+                                    <i class="fa-regular fa-calendar mr-2"></i>
+                                    <p th:text="${#temporals.format(article.createDate, 'yyyy-MM-dd HH:mm')}"></p>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-actions justify-center items-center">
+            </div>
+        </div>
+    </div>
+    <div id="params">
+        <input type="hidden" name="keyword" th:value="${keyword}">
+        <input type="hidden" name="type" th:value="${type}">
+    </div>
+    <div>
+        <input type="hidden" id="isSearchModal" name="isSearchModal" th:value="${isSearchModal}">
+    </div>
+    <script src="/js/main.js"></script>
+</div>
+</html>

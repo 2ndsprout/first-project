@@ -6,8 +6,7 @@ import com.example.demo_project.diary.ParamHandler;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -60,20 +60,22 @@ public class MemberController {
         return "login_form";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/member/{username}/profile")
     public String profile(@PathVariable("username") String username,
                           Principal principal, Model model, ParamHandler paramHandler) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
 
-        if (!currentUsername.equals(username)) {
-            return paramHandler.getRedirectUrl("/");
-        }
+        Member member = this.memberService.getMember(username);
+        Long categoryId = member.getCategoryList().getLast().getId();
+
+        this.mainService.checkRole(categoryId, principal);
         ListDataDto listDataDto = this.mainService.getDefaultListData(principal, paramHandler.getKeyword(), paramHandler.getType());
         model.addAttribute("listDataDto", listDataDto);
         model.addAttribute("paramHandler", paramHandler);
         return "profile_form";
     }
+
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/member/{username}/update")
     public String update (@PathVariable("username") String username,
                           String nickname, ParamHandler paramHandler) {
@@ -81,4 +83,19 @@ public class MemberController {
         this.memberService.changeNickname(username, nickname);
         return paramHandler.getRedirectUrl("/member/%s/profile".formatted(URLEncoder.encode(username, StandardCharsets.UTF_8)));
     }
+
+    @PreAuthorize("isAuthenticated() and hasRole('ROLE_ADMIN')")
+    @GetMapping("/admin/manage")
+    public String adminPage (Model model, ParamHandler paramHandler) {
+        List<Member> memberList = this.memberService.findAllMembers();
+        ListDataDto listDataDto = this.mainService.getAdminData(paramHandler.getKeyword());
+
+        model.addAttribute("memberList", memberList);
+        model.addAttribute("listDataDto", listDataDto);
+
+        return "admin_page";
+    }
+
+
+
 }

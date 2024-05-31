@@ -7,6 +7,9 @@ import com.example.demo_project.diary.category.CategoryService;
 import com.example.demo_project.diary.member.Member;
 import com.example.demo_project.diary.member.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -96,4 +99,35 @@ public class MainService {
     public void save (Category category) {
         this.categoryService.save(category);
     }
+
+    public ListDataDto getAdminData (String keyword) {
+        ListDataDto listDataDto = new ListDataDto();
+        List<Category> categoryList = this.categoryService.findAllCategories();
+        List<Article> articleList = this.articleService.findAllArticles();
+        List<Article> searchedArticleList = this.articleService.searchedAllArticle(keyword);
+        listDataDto.setCategoryList(categoryList);
+        listDataDto.setTargetCategory(categoryList.getLast());
+        listDataDto.setArticleList(articleList);
+        listDataDto.setTargetArticle(articleList.getLast());
+        listDataDto.setSearchedArticleList(searchedArticleList);
+        return listDataDto;
+    }
+
+    public void checkRole (Long categoryId, Principal principal) {
+        Category category = this.getCategory(categoryId);
+        Member member = category.getMember();
+
+        // Get the current authentication object
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Check if the current user is the owner of the category or has ROLE_ADMIN
+        boolean isOwner = member.getUsername().equals(principal.getName());
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+
+        if (!isOwner && !isAdmin) {
+            throw new AccessDeniedException("You do not have permission to access this resource");
+        }
+    }
+
 }

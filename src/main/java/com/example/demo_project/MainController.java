@@ -4,6 +4,7 @@ import com.example.demo_project.diary.ListDataDto;
 import com.example.demo_project.diary.MainService;
 import com.example.demo_project.diary.ParamHandler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ public class MainController {
 
     private final MainService mainService;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/")
     public String main(Principal principal, Model model, ParamHandler paramHandler) {
         try {

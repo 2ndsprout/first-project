@@ -6,7 +6,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,5 +39,16 @@ public class MemberService {
         Member member = this.getMember(username);
         member.setNickname(nickname);
         this.memberRepository.save(member);
+    }
+
+    public void save (Member member) {
+        this.memberRepository.save(member);
+    }
+
+    public List<Member> findAllMembers() {
+        List<Member> memberList = this.memberRepository.findAll();
+        return memberList.stream()
+                .filter(member -> !"admin".equals(member.getUsername()))
+                .collect(Collectors.toList());
     }
 }

@@ -12,4 +12,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findByMemberAndTitleContaining(Member member, String keyword);
     List<Article> findByMemberAndContentContaining(Member member, String keyword);
     List<Article> findByMemberAndTitleContainingOrMemberAndContentContaining(Member member, String titleKeyword, Member member1, String contentKeyword);
+    List<Article> findByTitleContainingOrContentContaining(String titleKeyword, String contentKeyword);
+
 }

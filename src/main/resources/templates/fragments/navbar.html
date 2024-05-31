@@ -6,21 +6,24 @@
             </div>
             <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                 <li th:if="${member != null}">
-                    <a th:data-url="@{|/member/${member.username}/profile|}" class="getActionBtn">
+                    <a sec:authorize="isAuthenticated() and hasRole('ROLE_MEMBER')" th:data-url="@{|/member/${member.username}/profile|}" class="getActionBtn">
                         <i class="fa-solid fa-user"></i>Profile
                     </a>
+                    <a sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')" th:data-url="@{|/admin/manage|}" class="getActionBtn">
+                        <i class="fa-solid fa-user"></i>Admin
+                    </a>
                 </li>
-                <li th:if="${member == null}">
+                <li sec:authorize="!isAuthenticated()">
                     <a th:href="@{|/login|}">
                         <i class="fa-solid fa-right-to-bracket"></i>Login
                     </a>
                 </li>
-                <li th:if="${member != null}">
+                <li sec:authorize="isAuthenticated()">
                     <a th:href="@{|/logout|}">
                         <i class="fa-solid fa-right-from-bracket"></i>Logout
                     </a>
                 </li>
-                <li th:if="${member == null}">
+                <li sec:authorize="!isAuthenticated()">
                     <a th:href="@{|/signup|}">
                         <i class="fa-solid fa-user-plus"></i>Signup
                     </a>
